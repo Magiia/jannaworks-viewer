@@ -15,6 +15,7 @@ h1{font-size:30px;letter-spacing:-.02em}
 .rt img{width:82%;height:82%;object-fit:contain;pointer-events:none}
 .rt:hover{opacity:.9}
 .rt.on{opacity:1;transform:scale(1.14);box-shadow:0 0 0 3px #0071e3,0 10px 24px rgba(0,0,0,.16)}
+.tris{position:absolute;top:12px;left:18px;font-size:11px;font-weight:500;color:#a3a3ad;letter-spacing:.01em;z-index:3;pointer-events:none}
 .card{background:#fff;border-radius:28px;box-shadow:0 20px 60px rgba(40,30,90,.12);padding:22px 22px 26px;position:relative}
 .stage{position:relative;height:440px;display:flex;align-items:center;justify-content:center;user-select:none;touch-action:pan-y}
 .stage img{position:absolute;max-width:72%;max-height:92%;object-fit:contain;transition:opacity .18s,transform .3s cubic-bezier(.3,.8,.25,1)}
@@ -46,6 +47,7 @@ body.embed .stage{flex:1 1 auto;height:auto;min-height:200px}
 <div class="top"><div><div class="kick">Live preview</div><h1>Fish Pack — Vol. 2</h1></div><div class="count" id="count"></div></div>
 <div class="roster" id="roster"><div class="rtrack" id="rtrack"></div></div>
 <div class="card">
+ <div class="tris" id="tris"></div>
  <div class="stage" id="stage"><button class="nav prev" id="prev" aria-label="Previous">‹</button><img id="a"><img id="b" class="out"><button class="nav next" id="next" aria-label="Next">›</button></div>
  <div class="name" id="name"></div>
  <div class="muts" id="muts"></div>
@@ -54,7 +56,7 @@ body.embed .stage{flex:1 1 auto;height:auto;min-height:200px}
 </div></div>
 <script>
 if(new URLSearchParams(location.search).has("embed"))document.body.classList.add("embed");
-const P=[["GhostShip", "img", "Ghost Ship"], ["Butterflyfish", "img", "Butterflyfish"], ["Guppy", "img", "Guppy"], ["Mandarin", "img", "Mandarin"], ["Angelfish", "img", "Angelfish"], ["Pufferfish", "img", "Pufferfish"], ["Betta", "img", "Betta"], ["Tang", "img", "Tang"], ["Penguin", "img", "Penguin"], ["Discus", "img", "Discus"], ["Isopod", "img", "Isopod"], ["MahiMahi", "img", "Mahi Mahi"], ["Squid", "img", "Squid"], ["Flounder", "img", "Flounder"], ["Triggerfish", "img", "Triggerfish"], ["Lobster", "img", "Lobster"], ["Sunfish", "img", "Sunfish"], ["Parrotfish", "img", "Parrotfish"], ["MantisShrimp", "img", "Mantis Shrimp"], ["Swordfish", "img", "Swordfish"], ["Nudibranch", "img", "Nudibranch"], ["Sawfish", "img", "Sawfish"], ["Hammerhead", "img", "Hammerhead"], ["Cuttlefish", "img", "Cuttlefish"], ["Sardine", "img", "Sardine"], ["Dolphin", "img", "Dolphin"], ["Piranha", "img", "Piranha"], ["Barreleye", "img", "Barreleye"], ["Pike", "img", "Pike"], ["Orca", "img", "Orca"], ["HorseshoeCrab", "img", "Horseshoe Crab"], ["ObsidianCuda", "img", "Obsidian Cuda"], ["Gulper", "img", "Gulper"], ["Beluga", "img", "Beluga"], ["RuneGolem", "img", "Rune Golem"], ["WolfEel", "img", "Wolf Eel"], ["Axolotl", "img", "Axolotl"], ["BloodSword", "img", "Blood Sword"], ["GhostShark", "img", "Ghost Shark"], ["FishKing", "img", "Fish King"], ["Narwhal", "img", "Narwhal"], ["Stormeel", "img", "Stormeel"], ["Bonefish", "img", "Bonefish"], ["Viperfish", "img", "Viperfish"], ["CoralGolem", "img", "Coral Golem"], ["RoboShark", "img", "Robo Shark"], ["Megalodon", "img", "Megalodon"], ["CrystalJelly", "img", "Crystal Jelly"], ["AbyssKraken", "img", "Abyss Kraken"], ["RShark", "img", "RShark"]];const N=P.map(x=>x[0]);const D=P.map(x=>x[1]);
+const P=[["GhostShip", "img", "Ghost Ship", 6916], ["Butterflyfish", "img", "Butterflyfish", 3248], ["Guppy", "img", "Guppy", 1824], ["Mandarin", "img", "Mandarin", 1246], ["Angelfish", "img", "Angelfish", 4968], ["Pufferfish", "img", "Pufferfish", 2580], ["Betta", "img", "Betta", 6280], ["Tang", "img", "Tang", 3684], ["Penguin", "img", "Penguin", 1196], ["Discus", "img", "Discus", 1492], ["Isopod", "img", "Isopod", 7048], ["MahiMahi", "img", "Mahi Mahi", 1710], ["Squid", "img", "Squid", 8474], ["Flounder", "img", "Flounder", 7446], ["Triggerfish", "img", "Triggerfish", 2376], ["Lobster", "img", "Lobster", 2868], ["Sunfish", "img", "Sunfish", 1708], ["Parrotfish", "img", "Parrotfish", 3492], ["MantisShrimp", "img", "Mantis Shrimp", 8714], ["Swordfish", "img", "Swordfish", 2624], ["Nudibranch", "img", "Nudibranch", 8560], ["Sawfish", "img", "Sawfish", 2528], ["Hammerhead", "img", "Hammerhead", 1420], ["Cuttlefish", "img", "Cuttlefish", 7594], ["Sardine", "img", "Sardine", 1088], ["Dolphin", "img", "Dolphin", 1312], ["Piranha", "img", "Piranha", 2528], ["Barreleye", "img", "Barreleye", 1368], ["Pike", "img", "Pike", 3540], ["Orca", "img", "Orca", 1338], ["HorseshoeCrab", "img", "Horseshoe Crab", 1534], ["ObsidianCuda", "img", "Obsidian Cuda", 2776], ["Gulper", "img", "Gulper", 4058], ["Beluga", "img", "Beluga", 2906], ["RuneGolem", "img", "Rune Golem", 6396], ["WolfEel", "img", "Wolf Eel", 2560], ["Axolotl", "img", "Axolotl", 6788], ["BloodSword", "img", "Blood Sword", 1894], ["GhostShark", "img", "Ghost Shark", 904], ["FishKing", "img", "Fish King", 8466], ["Narwhal", "img", "Narwhal", 2964], ["Stormeel", "img", "Stormeel", 7732], ["Bonefish", "img", "Bonefish", 6496], ["Viperfish", "img", "Viperfish", 4854], ["CoralGolem", "img", "Coral Golem", 4734], ["RoboShark", "img", "Robo Shark", 8454], ["Megalodon", "img", "Megalodon", 4024], ["CrystalJelly", "img", "Crystal Jelly", 7172], ["AbyssKraken", "img", "Abyss Kraken", 6208], ["RShark", "img", "RShark", 3552]];const N=P.map(x=>x[0]);const D=P.map(x=>x[1]);
 const M=[["Original", "#8a5a2b"], ["Gold", "#e0a800"], ["Diamond", "#4aa8ff"], ["Radioactive", "#2fd12f"], ["Red", "#e53030"], ["Rainbow", "conic-gradient(red,orange,yellow,lime,cyan,blue,magenta,red)"]];
 const nice=s=>s.replace(/([a-z])([A-Z])/g,"$1 $2");
 let ai=N.indexOf("Dolphin");if(ai<0)ai=0;let mi=0,front="a";
@@ -71,7 +73,7 @@ function show(dir){
  const src=`${D[ai]}/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
  B.onload=()=>{B.style.transform=dir?`translateX(${dir*40}px)`:"none";requestAnimationFrame(()=>{B.classList.remove("out");B.style.transform="none";A.classList.add("out");if(dir)A.style.transform=`translateX(${-dir*40}px)`});front=B.id};
  B.src=src;
- document.getElementById("name").textContent=P[ai][2]||nice(N[ai]);
+ document.getElementById("name").textContent=P[ai][2]||nice(N[ai]);document.getElementById("tris").textContent=P[ai][3]?P[ai][3].toLocaleString("en-US")+" triangles":"";
  document.getElementById("count").textContent=`${ai+1} / ${N.length}`;
  [...rt.children].forEach((e,i)=>e.classList.toggle("on",i==ai));
  [...mu.children].forEach((e,i)=>e.classList.toggle("on",i==mi));

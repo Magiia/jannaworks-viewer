@@ -15,6 +15,7 @@ h1{font-size:30px;letter-spacing:-.02em}
 .rt img{width:82%;height:82%;object-fit:contain;pointer-events:none}
 .rt:hover{opacity:.9}
 .rt.on{opacity:1;transform:scale(1.14);box-shadow:0 0 0 3px #0071e3,0 10px 24px rgba(0,0,0,.16)}
+.tris{position:absolute;top:12px;left:18px;font-size:11px;font-weight:500;color:#a3a3ad;letter-spacing:.01em;z-index:3;pointer-events:none}
 .card{background:#fff;border-radius:28px;box-shadow:0 20px 60px rgba(40,30,90,.12);padding:22px 22px 26px;position:relative}
 .stage{position:relative;height:440px;display:flex;align-items:center;justify-content:center;user-select:none;touch-action:pan-y}
 .stage img{position:absolute;max-width:72%;max-height:92%;object-fit:contain;transition:opacity .18s,transform .3s cubic-bezier(.3,.8,.25,1)}
@@ -46,6 +47,7 @@ body.embed .stage{flex:1 1 auto;height:auto;min-height:200px}
 <div class="top"><div><div class="kick">Live preview</div><h1>Animal Pack — Vol. 1</h1></div><div class="count" id="count"></div></div>
 <div class="roster" id="roster"><div class="rtrack" id="rtrack"></div></div>
 <div class="card">
+ <div class="tris" id="tris"></div>
  <div class="stage" id="stage"><button class="nav prev" id="prev" aria-label="Previous">‹</button><img id="a"><img id="b" class="out"><button class="nav next" id="next" aria-label="Next">›</button></div>
  <div class="name" id="name"></div>
  <div class="muts" id="muts"></div>
@@ -54,7 +56,7 @@ body.embed .stage{flex:1 1 auto;height:auto;min-height:200px}
 </div></div>
 <script>
 if(new URLSearchParams(location.search).has("embed"))document.body.classList.add("embed");
-const P=[["Ladybug", "img", "Ladybug"], ["Mouse", "img", "Mouse"], ["Caterpillar", "img", "Caterpillar"], ["Otter", "img", "Otter"], ["Chameleon", "img", "Chameleon"], ["Badger", "img", "Badger"], ["Frog", "img", "Frog"], ["Fox", "img", "Fox"], ["Meerkat", "img", "Meerkat"], ["Bat", "img", "Bat"], ["Fawn", "img", "Fawn"], ["Bee", "img", "Bee"], ["WhiteChicken", "img", "White Chicken"], ["Capybara", "img", "Capybara"], ["Snake", "img", "Snake"], ["Toucan", "img", "Toucan"], ["Owl", "img", "Owl"], ["Goose", "img", "Goose"], ["Monkey", "img", "Monkey"], ["Wolf", "img", "Wolf"], ["Cheetah", "img", "Cheetah"], ["Tortoise", "img", "Tortoise"], ["Llama", "img", "Llama"], ["Donkey", "img", "Donkey"], ["Cow", "img", "Cow"], ["Zebra", "img", "Zebra"], ["Panda", "img", "Panda"], ["Koala", "img", "Koala"], ["Tiger", "img", "Tiger"], ["Bull", "img", "Bull"], ["Rhino", "img", "Rhino"], ["Lion", "img", "Lion"], ["Peacock", "img", "Peacock"], ["Polarbear", "img", "Polarbear"], ["Chupacabra", "img", "Chupacabra"], ["Ankylosaurus", "img", "Ankylosaurus"], ["Rexcow", "img", "Rexcow"], ["Eaglewolf", "img", "Eaglewolf"], ["Dilophosaurus", "img", "Dilophosaurus"], ["Giganotosaurus", "img", "Giganotosaurus"], ["Gargoyle", "img", "Gargoyle"], ["Trex", "img", "Trex"], ["Minotaur", "img", "Minotaur"], ["Yeti", "img", "Yeti"], ["Giraffe", "img", "Giraffe"], ["RedDragon", "img", "Red Dragon"], ["Flameknight", "img", "Flameknight"], ["DarkAngel", "img", "Dark Angel"], ["Volcano", "img", "Volcano"], ["KaijuKing", "img", "Kaiju King"]];const N=P.map(x=>x[0]);const D=P.map(x=>x[1]);
+const P=[["Ladybug", "img", "Ladybug", 2032], ["Mouse", "img", "Mouse", 5788], ["Caterpillar", "img", "Caterpillar", 3292], ["Otter", "img", "Otter", 3168], ["Chameleon", "img", "Chameleon", 4292], ["Badger", "img", "Badger", 3404], ["Frog", "img", "Frog", 2772], ["Fox", "img", "Fox", 2860], ["Meerkat", "img", "Meerkat", 3156], ["Bat", "img", "Bat", 1956], ["Fawn", "img", "Fawn", 4972], ["Bee", "img", "Bee", 2220], ["WhiteChicken", "img", "White Chicken", 1472], ["Capybara", "img", "Capybara", 2636], ["Snake", "img", "Snake", 1116], ["Toucan", "img", "Toucan", 3436], ["Owl", "img", "Owl", 2552], ["Goose", "img", "Goose", 1936], ["Monkey", "img", "Monkey", 3380], ["Wolf", "img", "Wolf", 2436], ["Cheetah", "img", "Cheetah", 2804], ["Tortoise", "img", "Tortoise", 2484], ["Llama", "img", "Llama", 6072], ["Donkey", "img", "Donkey", 2672], ["Cow", "img", "Cow", 4048], ["Zebra", "img", "Zebra", 3432], ["Panda", "img", "Panda", 1804], ["Koala", "img", "Koala", 5908], ["Tiger", "img", "Tiger", 2904], ["Bull", "img", "Bull", 2348], ["Rhino", "img", "Rhino", 2816], ["Lion", "img", "Lion", 4772], ["Peacock", "img", "Peacock", 3250], ["Polarbear", "img", "Polarbear", 4151], ["Chupacabra", "img", "Chupacabra", 8200], ["Ankylosaurus", "img", "Ankylosaurus", 5652], ["Rexcow", "img", "Rexcow", 4712], ["Eaglewolf", "img", "Eaglewolf", 8916], ["Dilophosaurus", "img", "Dilophosaurus", 5328], ["Giganotosaurus", "img", "Giganotosaurus", 4764], ["Gargoyle", "img", "Gargoyle", 8452], ["Trex", "img", "T-Rex", 6844], ["Minotaur", "img", "Minotaur", 8416], ["Yeti", "img", "Yeti", 8948], ["Giraffe", "img", "Giraffe", 4576], ["RedDragon", "img", "Red Dragon", 11436], ["Flameknight", "img", "Flameknight", 15696], ["DarkAngel", "img", "Dark Angel", 17756], ["Volcano", "img", "Volcano", 11957], ["KaijuKing", "img", "Kaiju King", 8876]];const N=P.map(x=>x[0]);const D=P.map(x=>x[1]);
 const M=[["Original", "#8a5a2b"], ["Gold", "#e0a800"], ["Diamond", "#4aa8ff"], ["Radioactive", "#2fd12f"], ["Red", "#e53030"], ["Rainbow", "conic-gradient(red,orange,yellow,lime,cyan,blue,magenta,red)"]];
 const nice=s=>s.replace(/([a-z])([A-Z])/g,"$1 $2");
 let ai=N.indexOf("Lion");if(ai<0)ai=0;let mi=0,front="a";
@@ -71,7 +73,7 @@ function show(dir){
  const src=`${D[ai]}/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
  B.onload=()=>{B.style.transform=dir?`translateX(${dir*40}px)`:"none";requestAnimationFrame(()=>{B.classList.remove("out");B.style.transform="none";A.classList.add("out");if(dir)A.style.transform=`translateX(${-dir*40}px)`});front=B.id};
  B.src=src;
- document.getElementById("name").textContent=P[ai][2]||nice(N[ai]);
+ document.getElementById("name").textContent=P[ai][2]||nice(N[ai]);document.getElementById("tris").textContent=P[ai][3]?P[ai][3].toLocaleString("en-US")+" triangles":"";
  document.getElementById("count").textContent=`${ai+1} / ${N.length}`;
  [...rt.children].forEach((e,i)=>e.classList.toggle("on",i==ai));
  [...mu.children].forEach((e,i)=>e.classList.toggle("on",i==mi));

@@ -15,6 +15,7 @@ h1{font-size:30px;letter-spacing:-.02em}
 .rt img{width:82%;height:82%;object-fit:contain;pointer-events:none}
 .rt:hover{opacity:.9}
 .rt.on{opacity:1;transform:scale(1.14);box-shadow:0 0 0 3px #0071e3,0 10px 24px rgba(0,0,0,.16)}
+.tris{position:absolute;top:12px;left:18px;font-size:11px;font-weight:500;color:#a3a3ad;letter-spacing:.01em;z-index:3;pointer-events:none}
 .card{background:#fff;border-radius:28px;box-shadow:0 20px 60px rgba(40,30,90,.12);padding:22px 22px 26px;position:relative}
 .stage{position:relative;height:440px;display:flex;align-items:center;justify-content:center;user-select:none;touch-action:pan-y}
 .stage img{position:absolute;max-width:72%;max-height:92%;object-fit:contain;transition:opacity .18s,transform .3s cubic-bezier(.3,.8,.25,1)}
@@ -46,6 +47,7 @@ body.embed .stage{flex:1 1 auto;height:auto;min-height:200px}
 <div class="top"><div><div class="kick">Live preview</div><h1>Fish Pack — Vol. 1</h1></div><div class="count" id="count"></div></div>
 <div class="roster" id="roster"><div class="rtrack" id="rtrack"></div></div>
 <div class="card">
+ <div class="tris" id="tris"></div>
  <div class="stage" id="stage"><button class="nav prev" id="prev" aria-label="Previous">‹</button><img id="a"><img id="b" class="out"><button class="nav next" id="next" aria-label="Next">›</button></div>
  <div class="name" id="name"></div>
  <div class="muts" id="muts"></div>
@@ -54,7 +56,7 @@ body.embed .stage{flex:1 1 auto;height:auto;min-height:200px}
 </div></div>
 <script>
 if(new URLSearchParams(location.search).has("embed"))document.body.classList.add("embed");
-const P=[["Boxfish", "img", "Boxfish"], ["Clownfish", "img", "Clownfish"], ["Seahorse", "img", "Seahorse"], ["Starfish", "img", "Starfish"], ["Octopus", "img", "Octopus"], ["IceQueen", "img", "Ice Queen"], ["Barracuda", "img", "Barracuda"], ["Goldfish", "img", "Goldfish"], ["MoorishIdol", "img", "Moorish Idol"], ["Urchin", "img", "Urchin"], ["Turtle", "img", "Turtle"], ["Crab", "img", "Crab"], ["Dumbo", "img", "Dumbo"], ["Bass", "img", "Bass"], ["Clam", "img", "Clam"], ["DragonArowana", "img", "Dragon Arowana"], ["Tuna", "img", "Tuna"], ["Jellyfish", "img", "Jellyfish"], ["Carp", "img", "Carp"], ["Nautilus", "img", "Nautilus"], ["ToxicPuffer", "img", "Toxic Puffer"], ["SeaLion", "img", "Sea Lion"], ["TigerShark", "img", "Tiger Shark"], ["Seal", "img", "Seal"], ["HermitCrab", "img", "Hermit Crab"], ["Blobfish", "img", "Blobfish"], ["LaserDragonfish", "img", "Laser Dragonfish"], ["Lionfish", "img", "Lionfish"], ["Catfish", "img", "Catfish"], ["Coelacanth", "img", "Coelacanth"], ["GreatWhite", "img", "Great White"], ["Anglerfish", "img", "Anglerfish"], ["VikingWalrus", "img", "Viking Walrus"], ["Manta", "img", "Manta"], ["Eel", "img", "Eel"], ["WhaleShark", "img", "Whale Shark"], ["Stingray", "img", "Stingray"], ["PlasmaAngler", "img", "Plasma Angler"], ["IslandTurtle", "img", "Island Turtle"], ["PharaohFish", "img", "Pharaoh Fish"], ["Spikefish", "img", "Spikefish"], ["Oarfish", "img", "Oarfish"], ["LavaCrab", "img", "Lava Crab"], ["SamuraiKoi", "img", "Samurai Koi"], ["Whale", "img", "Whale"], ["LavaFish", "img", "Lava Fish"], ["Kraken", "img", "Kraken"], ["StonefishLord", "img", "Stonefish Lord"], ["Abyss", "img", "Abyss"], ["Gworm", "img", "Gworm"]];const N=P.map(x=>x[0]);const D=P.map(x=>x[1]);
+const P=[["Boxfish", "img", "Boxfish", 1012], ["Clownfish", "img", "Clownfish", 3012], ["Seahorse", "img", "Seahorse", 2078], ["Starfish", "img", "Starfish", 2086], ["Octopus", "img", "Octopus", 4906], ["IceQueen", "img", "Ice Queen", 2196], ["Barracuda", "img", "Barracuda", 2492], ["Goldfish", "img", "Goldfish", 6920], ["MoorishIdol", "img", "Moorish Idol", 1318], ["Urchin", "img", "Urchin", 2256], ["Turtle", "img", "Turtle", 5010], ["Crab", "img", "Crab", 2548], ["Dumbo", "img", "Dumbo", 3994], ["Bass", "img", "Bass", 2158], ["Clam", "img", "Clam", 8666], ["DragonArowana", "img", "Dragon Arowana", 7072], ["Tuna", "img", "Tuna", 2088], ["Jellyfish", "img", "Jellyfish", 4346], ["Carp", "img", "Carp", 1764], ["Nautilus", "img", "Nautilus", 5136], ["ToxicPuffer", "img", "Toxic Puffer", 6272], ["SeaLion", "img", "Sea Lion", 1776], ["TigerShark", "img", "Tiger Shark", 1422], ["Seal", "img", "Seal", 7620], ["HermitCrab", "img", "Hermit Crab", 7012], ["Blobfish", "img", "Blobfish", 4072], ["LaserDragonfish", "img", "Laser Dragonfish", 5152], ["Lionfish", "img", "Lionfish", 2394], ["Catfish", "img", "Catfish", 1670], ["Coelacanth", "img", "Coelacanth", 3668], ["GreatWhite", "img", "Great White", 1968], ["Anglerfish", "img", "Anglerfish", 3244], ["VikingWalrus", "img", "Viking Walrus", 8992], ["Manta", "img", "Manta", 1102], ["Eel", "img", "Eel", 3874], ["WhaleShark", "img", "Whale Shark", 4164], ["Stingray", "img", "Stingray", 1100], ["PlasmaAngler", "img", "Plasma Angler", 3112], ["IslandTurtle", "img", "Island Turtle", 8128], ["PharaohFish", "img", "Pharaoh Fish", 6110], ["Spikefish", "img", "Spikefish", 4930], ["Oarfish", "img", "Oarfish", 4895], ["LavaCrab", "img", "Lava Crab", 5847], ["SamuraiKoi", "img", "Samurai Koi", 11910], ["Whale", "img", "Whale", 6496], ["LavaFish", "img", "Lava Fish", 8626], ["Kraken", "img", "Kraken", 7126], ["StonefishLord", "img", "Stonefish Lord", 8996], ["Abyss", "img", "Abyss", 5779], ["Gworm", "img", "Gworm", 3570]];const N=P.map(x=>x[0]);const D=P.map(x=>x[1]);
 const M=[["Original", "#8a5a2b"], ["Gold", "#e0a800"], ["Diamond", "#4aa8ff"], ["Radioactive", "#2fd12f"], ["Red", "#e53030"], ["Rainbow", "conic-gradient(red,orange,yellow,lime,cyan,blue,magenta,red)"]];
 const nice=s=>s.replace(/([a-z])([A-Z])/g,"$1 $2");
 let ai=N.indexOf("Blobfish");if(ai<0)ai=0;let mi=0,front="a";
@@ -71,7 +73,7 @@ function show(dir){
  const src=`${D[ai]}/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
  B.onload=()=>{B.style.transform=dir?`translateX(${dir*40}px)`:"none";requestAnimationFrame(()=>{B.classList.remove("out");B.style.transform="none";A.classList.add("out");if(dir)A.style.transform=`translateX(${-dir*40}px)`});front=B.id};
  B.src=src;
- document.getElementById("name").textContent=P[ai][2]||nice(N[ai]);
+ document.getElementById("name").textContent=P[ai][2]||nice(N[ai]);document.getElementById("tris").textContent=P[ai][3]?P[ai][3].toLocaleString("en-US")+" triangles":"";
  document.getElementById("count").textContent=`${ai+1} / ${N.length}`;
  [...rt.children].forEach((e,i)=>e.classList.toggle("on",i==ai));
  [...mu.children].forEach((e,i)=>e.classList.toggle("on",i==mi));

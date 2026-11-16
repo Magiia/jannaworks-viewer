@@ -15,6 +15,7 @@ h1{font-size:30px;letter-spacing:-.02em}
 .rt img{width:82%;height:82%;object-fit:contain;pointer-events:none}
 .rt:hover{opacity:.9}
 .rt.on{opacity:1;transform:scale(1.14);box-shadow:0 0 0 3px #0071e3,0 10px 24px rgba(0,0,0,.16)}
+.tris{position:absolute;top:12px;left:18px;font-size:11px;font-weight:500;color:#a3a3ad;letter-spacing:.01em;z-index:3;pointer-events:none}
 .card{background:#fff;border-radius:28px;box-shadow:0 20px 60px rgba(40,30,90,.12);padding:22px 22px 26px;position:relative}
 .stage{position:relative;height:440px;display:flex;align-items:center;justify-content:center;user-select:none;touch-action:pan-y}
 .stage img{position:absolute;max-width:72%;max-height:92%;object-fit:contain;transition:opacity .18s,transform .3s cubic-bezier(.3,.8,.25,1)}
@@ -46,6 +47,7 @@ body.embed .stage{flex:1 1 auto;height:auto;min-height:200px}
 <div class="top"><div><div class="kick">Live preview</div><h1>Animal Pack — Vol. 2</h1></div><div class="count" id="count"></div></div>
 <div class="roster" id="roster"><div class="rtrack" id="rtrack"></div></div>
 <div class="card">
+ <div class="tris" id="tris"></div>
  <div class="stage" id="stage"><button class="nav prev" id="prev" aria-label="Previous">‹</button><img id="a"><img id="b" class="out"><button class="nav next" id="next" aria-label="Next">›</button></div>
  <div class="name" id="name"></div>
  <div class="muts" id="muts"></div>
@@ -54,7 +56,7 @@ body.embed .stage{flex:1 1 auto;height:auto;min-height:200px}
 </div></div>
 <script>
 if(new URLSearchParams(location.search).has("embed"))document.body.classList.add("embed");
-const P=[["Snail", "img", "Snail"], ["Dragonfly", "img", "Dragonfly"], ["Hamster", "img", "Hamster"], ["Mole", "img", "Mole"], ["Dog", "img", "Dog"], ["Beaver", "img", "Beaver"], ["Cat", "img", "Cat"], ["Skunk", "img", "Skunk"], ["Hedgehog", "img", "Hedgehog"], ["Pigeon", "img", "Pigeon"], ["Rooster", "img", "Rooster"], ["Bunny", "img", "Bunny"], ["Crocodile", "img", "Crocodile"], ["Pelican", "img", "Pelican"], ["Porcupine", "img", "Porcupine"], ["Flamingo", "img", "Flamingo"], ["Butterfly", "img", "Butterfly"], ["Lemur", "img", "Lemur"], ["Iguana", "img", "Iguana"], ["Crow", "img", "Crow"], ["Boar", "img", "Boar"], ["Goat", "img", "Goat"], ["Armadillo", "img", "Armadillo"], ["Kangaroo", "img", "Kangaroo"], ["Ostrich", "img", "Ostrich"], ["Camel", "img", "Camel"], ["Sloth", "img", "Sloth"], ["Anteater", "img", "Anteater"], ["Horse", "img", "Horse"], ["Bison", "img", "Bison"], ["Hippo", "img", "Hippo"], ["HammerRhino", "img", "Hammer Rhino"], ["Shark", "img", "Shark"], ["Gorilla", "img", "Gorilla"], ["Parasaurolophus", "img", "Parasaurolophus"], ["Pteranodon", "img", "Pteranodon"], ["Peryton", "img", "Peryton"], ["Elephant", "img", "Elephant"], ["MashupKing", "img", "Mashup King"], ["Styracosaurus", "img", "Styracosaurus"], ["FrogDragon", "img", "Frog Dragon"], ["Spinosaurus", "img", "Spinosaurus"], ["Sabretooth", "img", "Sabretooth"], ["Balrog", "img", "Balrog"], ["SandTitan", "img", "Sand Titan"], ["Argentinosaurus", "img", "Argentinosaurus"], ["BeetleKaiju", "img", "Beetle Kaiju"], ["SpiderCrab", "img", "Spider Crab"], ["Infernotaur", "img", "Infernotaur"], ["DragonGod", "img", "Dragon God"]];const N=P.map(x=>x[0]);const D=P.map(x=>x[1]);
+const P=[["Snail", "img", "Snail", 1112], ["Dragonfly", "img", "Dragonfly", 2440], ["Hamster", "img", "Hamster", 3248], ["Mole", "img", "Mole", 3096], ["Dog", "img", "Dog", 4554], ["Beaver", "img", "Beaver", 3980], ["Cat", "img", "Cat", 1952], ["Skunk", "img", "Skunk", 3764], ["Hedgehog", "img", "Hedgehog", 3256], ["Pigeon", "img", "Pigeon", 2164], ["Rooster", "img", "Rooster", 3772], ["Bunny", "img", "Bunny", 2168], ["Crocodile", "img", "Crocodile", 4880], ["Pelican", "img", "Pelican", 2140], ["Porcupine", "img", "Porcupine", 3584], ["Flamingo", "img", "Flamingo", 5592], ["Butterfly", "img", "Butterfly", 1716], ["Lemur", "img", "Lemur", 3888], ["Iguana", "img", "Iguana", 4748], ["Crow", "img", "Crow", 2540], ["Boar", "img", "Boar", 3634], ["Goat", "img", "Goat", 3240], ["Armadillo", "img", "Armadillo", 3388], ["Kangaroo", "img", "Kangaroo", 3548], ["Ostrich", "img", "Ostrich", 4730], ["Camel", "img", "Camel", 3128], ["Sloth", "img", "Sloth", 3840], ["Anteater", "img", "Anteater", 4056], ["Horse", "img", "Horse", 5156], ["Bison", "img", "Bison", 5524], ["Hippo", "img", "Hippo", 2752], ["HammerRhino", "img", "Hammer Rhino", 4068], ["Shark", "img", "Shark", 2119], ["Gorilla", "img", "Gorilla", 3476], ["Parasaurolophus", "img", "Parasaurolophus", 3616], ["Pteranodon", "img", "Pteranodon", 3016], ["Peryton", "img", "Peryton", 8480], ["Elephant", "img", "Elephant", 4956], ["MashupKing", "img", "Mashup King", 11026], ["Styracosaurus", "img", "Styracosaurus", 5656], ["FrogDragon", "img", "Frog Dragon", 1848], ["Spinosaurus", "img", "Spinosaurus", 7020], ["Sabretooth", "img", "Sabretooth", 11344], ["Balrog", "img", "Balrog", 5144], ["SandTitan", "img", "Sand Titan", 9530], ["Argentinosaurus", "img", "Argentinosaurus", 4528], ["BeetleKaiju", "img", "Beetle Kaiju", 7916], ["SpiderCrab", "img", "Spider Crab", 6824], ["Infernotaur", "img", "Infernotaur", 11244], ["DragonGod", "img", "Dragon God", 17968]];const N=P.map(x=>x[0]);const D=P.map(x=>x[1]);
 const M=[["Original", "#8a5a2b"], ["Gold", "#e0a800"], ["Diamond", "#4aa8ff"], ["Radioactive", "#2fd12f"], ["Red", "#e53030"], ["Rainbow", "conic-gradient(red,orange,yellow,lime,cyan,blue,magenta,red)"]];
 const nice=s=>s.replace(/([a-z])([A-Z])/g,"$1 $2");
 let ai=N.indexOf("Camel");if(ai<0)ai=0;let mi=0,front="a";
@@ -71,7 +73,7 @@ function show(dir){
  const src=`${D[ai]}/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
  B.onload=()=>{B.style.transform=dir?`translateX(${dir*40}px)`:"none";requestAnimationFrame(()=>{B.classList.remove("out");B.style.transform="none";A.classList.add("out");if(dir)A.style.transform=`translateX(${-dir*40}px)`});front=B.id};
  B.src=src;
- document.getElementById("name").textContent=P[ai][2]||nice(N[ai]);
+ document.getElementById("name").textContent=P[ai][2]||nice(N[ai]);document.getElementById("tris").textContent=P[ai][3]?P[ai][3].toLocaleString("en-US")+" triangles":"";
  document.getElementById("count").textContent=`${ai+1} / ${N.length}`;
  [...rt.children].forEach((e,i)=>e.classList.toggle("on",i==ai));
  [...mu.children].forEach((e,i)=>e.classList.toggle("on",i==mi));
