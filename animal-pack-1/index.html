@@ -33,7 +33,8 @@ h1{font-size:30px;letter-spacing:-.02em}
 body.embed{background:transparent;padding:0}
 body.embed .top{display:none}body.embed .foot{display:none}
 body.embed .card{box-shadow:0 10px 30px rgba(40,30,90,.08)}
-body.embed .stage{height:360px}
+body.embed .stage{height:clamp(220px,calc(100vh - 390px),360px)}
+@media(max-width:420px){body.embed .muts{gap:6px}body.embed .chip{height:34px;padding:0 10px;font-size:13px;gap:6px}body.embed .chip i{width:11px;height:11px}body.embed .card{padding:16px 12px 18px}}
 @media(max-width:600px){.stage{height:300px}.name{font-size:22px}.chip{height:38px;padding:0 13px;font-size:14px}h1{font-size:22px}.nav{width:44px;height:44px}}
 </style></head><body><div class="wrap">
 <div class="top"><div><div class="kick">Live preview</div><h1>Animal Pack — Vol. 1</h1></div><div class="count" id="count"></div></div>
