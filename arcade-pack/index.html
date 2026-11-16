@@ -71,8 +71,12 @@ function loadVis(x){const R=document.getElementById("roster");const L=(x===undef
 let lvT=0;document.getElementById("roster").addEventListener("scroll",()=>{clearTimeout(lvT);lvT=setTimeout(()=>loadVis(),60)},{passive:true});
 function show(dir){
  const src=`${D[ai]}/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
- B.onload=()=>{B.style.transform=dir?`translateX(${dir*40}px)`:"none";requestAnimationFrame(()=>{B.classList.remove("out");B.style.transform="none";A.classList.add("out");if(dir)A.style.transform=`translateX(${-dir*40}px)`});front=B.id};
- B.src=src;
+ const my=++show.req;B.onload=B.onerror=null;
+ if(A.getAttribute("src")!==src){
+  const swap=()=>{if(my!==show.req)return;B.onload=B.onerror=null;B.style.transform=dir?`translateX(${dir*40}px)`:"none";requestAnimationFrame(()=>{B.classList.remove("out");B.style.transform="none";A.classList.add("out");if(dir)A.style.transform=`translateX(${-dir*40}px)`});front=B.id};
+  B.onload=swap;B.onerror=()=>{if(my===show.req)setTimeout(()=>{if(my===show.req)B.src=src+"?r="+Date.now()},400)};
+  if(B.getAttribute("src")===src&&B.complete&&B.naturalWidth)swap();else B.src=src;
+ }else{A.classList.remove("out");A.style.transform="none";B.classList.add("out")}
  document.getElementById("name").textContent=P[ai][2]||nice(N[ai]);document.getElementById("tris").textContent=P[ai][3]?P[ai][3].toLocaleString("en-US")+" triangles":"";
  document.getElementById("count").textContent=`${ai+1} / ${N.length}`;
  [...rt.children].forEach((e,i)=>e.classList.toggle("on",i==ai));
@@ -81,6 +85,7 @@ function show(dir){
  const tx=t.offsetLeft+t.offsetWidth/2-W/2;loadVis(tx);rscroll(tx,show.done);show.done=1;
  [ai-1,ai+1].forEach(j=>{if(N[j]){const p=new Image();p.src=`${D[j]}/${N[j]}_${mi}.webp`}});
 }
+show.req=0;
 function go(i,dir){i=(i+N.length)%N.length;dir=dir||(i>ai?1:-1);ai=i;show(dir)}
 document.getElementById("prev").onclick=()=>go(ai-1,-1);
 document.getElementById("next").onclick=()=>go(ai+1,1);
