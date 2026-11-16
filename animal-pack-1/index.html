@@ -8,8 +8,9 @@ body{font-family:-apple-system,"SF Pro Display","Segoe UI",Inter,Arial,sans-seri
 .kick{font-size:13px;font-weight:700;letter-spacing:.12em;color:#0071e3;text-transform:uppercase}
 h1{font-size:30px;letter-spacing:-.02em}
 .count{font-size:15px;color:#666;font-weight:600}
-.roster{position:relative;overflow:hidden;height:104px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.rtrack{position:absolute;top:10px;left:0;display:flex;gap:12px;transition:transform .45s cubic-bezier(.3,.8,.25,1)}
+.roster{position:relative;overflow-x:auto;overflow-y:hidden;height:104px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.roster::-webkit-scrollbar{display:none}
+.rtrack{display:flex;gap:12px;width:max-content;padding:12px calc(50% - 38px) 0}
 .rt{flex:0 0 76px;height:76px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.65;transition:transform .25s,opacity .25s,box-shadow .25s;box-shadow:0 6px 16px rgba(0,0,0,.08);border:0}
 .rt img{width:82%;height:82%;object-fit:contain;pointer-events:none}
 .rt:hover{opacity:.9}
@@ -56,6 +57,9 @@ let ai=N.indexOf("Lion");if(ai<0)ai=0;let mi=0,front="a";
 const rt=document.getElementById("rtrack"),mu=document.getElementById("muts");
 N.forEach((n,i)=>{const b=document.createElement("button");b.className="rt";b.title=nice(n);b.innerHTML=`<img src="img/${n}_0.webp" alt="">`;b.onclick=()=>go(i);rt.appendChild(b)});
 M.forEach(([m,c],i)=>{const b=document.createElement("button");b.className="chip";b.innerHTML=`<i style="background:${c}"></i>${m}`;b.onclick=()=>{mi=i;show()};mu.appendChild(b)});
+let rAnim=0;function rscroll(x,anim){const R=document.getElementById("roster");cancelAnimationFrame(rAnim);if(!anim){R.scrollLeft=x;return}
+ const x0=R.scrollLeft,t0=performance.now(),D=420;const step=n=>{const k=Math.min(1,(n-t0)/D),e=1-Math.pow(1-k,3);R.scrollLeft=x0+(x-x0)*e;if(k<1)rAnim=requestAnimationFrame(step)};rAnim=requestAnimationFrame(step)}
+["touchstart","wheel","mousedown"].forEach(ev=>document.getElementById("roster").addEventListener(ev,()=>cancelAnimationFrame(rAnim),{passive:true}));
 function show(dir){
  const src=`img/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
  B.onload=()=>{B.style.transform=dir?`translateX(${dir*40}px)`:"none";requestAnimationFrame(()=>{B.classList.remove("out");B.style.transform="none";A.classList.add("out");if(dir)A.style.transform=`translateX(${-dir*40}px)`});front=B.id};
@@ -65,7 +69,7 @@ function show(dir){
  [...rt.children].forEach((e,i)=>e.classList.toggle("on",i==ai));
  [...mu.children].forEach((e,i)=>e.classList.toggle("on",i==mi));
  const t=rt.children[ai],W=document.getElementById("roster").clientWidth;
- rt.style.transform=`translateX(${W/2-(t.offsetLeft+t.offsetWidth/2)}px)`;
+ rscroll(t.offsetLeft+t.offsetWidth/2-W/2,show.done);show.done=1;
  [ai-1,ai+1].forEach(j=>{if(N[j]){const p=new Image();p.src=`img/${N[j]}_${mi}.webp`}});
  for(let k=0;k<6;k++){const p=new Image();p.src=`img/${N[ai]}_${k}.webp`}
 }
@@ -73,9 +77,14 @@ function go(i,dir){i=(i+N.length)%N.length;dir=dir||(i>ai?1:-1);ai=i;show(dir)}
 document.getElementById("prev").onclick=()=>go(ai-1,-1);
 document.getElementById("next").onclick=()=>go(ai+1,1);
 addEventListener("keydown",e=>{if(e.key=="ArrowRight")go(ai+1,1);if(e.key=="ArrowLeft")go(ai-1,-1)});
-let sx=null;const st=document.getElementById("stage");
-st.addEventListener("pointerdown",e=>sx=e.clientX);
-st.addEventListener("pointerup",e=>{if(sx!==null&&Math.abs(e.clientX-sx)>40)go(ai+(e.clientX<sx?1:-1),e.clientX<sx?1:-1);sx=null});
+const st=document.getElementById("stage");let tx=null,ty=null;
+function swipe(dx,dy){if(Math.abs(dx)>35&&Math.abs(dx)>Math.abs(dy)){const d=dx<0?1:-1;go(ai+d,d)}}
+st.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+st.addEventListener("touchend",e=>{if(tx===null)return;const t=e.changedTouches[0];swipe(t.clientX-tx,t.clientY-ty);tx=null},{passive:true});
+let mx=null,my=null;
+st.addEventListener("mousedown",e=>{if(e.target.closest(".nav"))return;mx=e.clientX;my=e.clientY});
+addEventListener("mouseup",e=>{if(mx===null)return;swipe(e.clientX-mx,e.clientY-my);mx=null});
+st.querySelectorAll("img").forEach(i=>i.draggable=false);
 addEventListener("resize",()=>show());
 show();
 </script></body></html>
