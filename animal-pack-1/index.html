@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Animal Pack Vol. 1 · Preview</title>
+<title>Animal Pack — Vol. 1 · Preview</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,"SF Pro Display","Segoe UI",Inter,Arial,sans-serif;background:linear-gradient(160deg,#f3effc,#e9eefc);color:#111;min-height:100vh;display:flex;justify-content:center;padding:28px 16px}
@@ -49,17 +49,17 @@ body.embed .stage{flex:1 1 auto;height:auto;min-height:200px}
  <div class="stage" id="stage"><button class="nav prev" id="prev" aria-label="Previous">‹</button><img id="a"><img id="b" class="out"><button class="nav next" id="next" aria-label="Next">›</button></div>
  <div class="name" id="name"></div>
  <div class="muts" id="muts"></div>
- <div class="foot"><a class="buy" href="https://payhip.com/b/9ZXsA">Get the pack · $59.99</a></div>
+ <div class="foot"><a class="buy" href="https://payhip.com/b/9ZXsA" target="_top">Get the pack · $59.99</a></div>
  <div class="hint">Swipe or use ← → to browse · All models × 6 colours</div>
 </div></div>
 <script>
 if(new URLSearchParams(location.search).has("embed"))document.body.classList.add("embed");
-const N=["Ladybug", "Mouse", "Caterpillar", "Otter", "Chameleon", "Badger", "Frog", "Fox", "Meerkat", "Bat", "Fawn", "Bee", "WhiteChicken", "Capybara", "Snake", "Toucan", "Owl", "Goose", "Monkey", "Wolf", "Cheetah", "Tortoise", "Llama", "Donkey", "Cow", "Zebra", "Panda", "Koala", "Tiger", "Bull", "Rhino", "Lion", "Peacock", "Polarbear", "Chupacabra", "Ankylosaurus", "Rexcow", "Eaglewolf", "Dilophosaurus", "Giganotosaurus", "Gargoyle", "Trex", "Minotaur", "Yeti", "Giraffe", "RedDragon", "Flameknight", "DarkAngel", "Volcano", "KaijuKing"];
-const M=[["Original","#8a5a2b"],["Gold","#e0a800"],["Diamond","#4aa8ff"],["Radioactive","#2fd12f"],["Red","#e53030"],["Rainbow","conic-gradient(red,orange,yellow,lime,cyan,blue,magenta,red)"]];
+const P=[["Ladybug", "img", "Ladybug"], ["Mouse", "img", "Mouse"], ["Caterpillar", "img", "Caterpillar"], ["Otter", "img", "Otter"], ["Chameleon", "img", "Chameleon"], ["Badger", "img", "Badger"], ["Frog", "img", "Frog"], ["Fox", "img", "Fox"], ["Meerkat", "img", "Meerkat"], ["Bat", "img", "Bat"], ["Fawn", "img", "Fawn"], ["Bee", "img", "Bee"], ["WhiteChicken", "img", "White Chicken"], ["Capybara", "img", "Capybara"], ["Snake", "img", "Snake"], ["Toucan", "img", "Toucan"], ["Owl", "img", "Owl"], ["Goose", "img", "Goose"], ["Monkey", "img", "Monkey"], ["Wolf", "img", "Wolf"], ["Cheetah", "img", "Cheetah"], ["Tortoise", "img", "Tortoise"], ["Llama", "img", "Llama"], ["Donkey", "img", "Donkey"], ["Cow", "img", "Cow"], ["Zebra", "img", "Zebra"], ["Panda", "img", "Panda"], ["Koala", "img", "Koala"], ["Tiger", "img", "Tiger"], ["Bull", "img", "Bull"], ["Rhino", "img", "Rhino"], ["Lion", "img", "Lion"], ["Peacock", "img", "Peacock"], ["Polarbear", "img", "Polarbear"], ["Chupacabra", "img", "Chupacabra"], ["Ankylosaurus", "img", "Ankylosaurus"], ["Rexcow", "img", "Rexcow"], ["Eaglewolf", "img", "Eaglewolf"], ["Dilophosaurus", "img", "Dilophosaurus"], ["Giganotosaurus", "img", "Giganotosaurus"], ["Gargoyle", "img", "Gargoyle"], ["Trex", "img", "Trex"], ["Minotaur", "img", "Minotaur"], ["Yeti", "img", "Yeti"], ["Giraffe", "img", "Giraffe"], ["RedDragon", "img", "Red Dragon"], ["Flameknight", "img", "Flameknight"], ["DarkAngel", "img", "Dark Angel"], ["Volcano", "img", "Volcano"], ["KaijuKing", "img", "Kaiju King"]];const N=P.map(x=>x[0]);const D=P.map(x=>x[1]);
+const M=[["Original", "#8a5a2b"], ["Gold", "#e0a800"], ["Diamond", "#4aa8ff"], ["Radioactive", "#2fd12f"], ["Red", "#e53030"], ["Rainbow", "conic-gradient(red,orange,yellow,lime,cyan,blue,magenta,red)"]];
 const nice=s=>s.replace(/([a-z])([A-Z])/g,"$1 $2");
 let ai=N.indexOf("Lion");if(ai<0)ai=0;let mi=0,front="a";
 const rt=document.getElementById("rtrack"),mu=document.getElementById("muts");
-N.forEach((n,i)=>{const b=document.createElement("button");b.className="rt";b.title=nice(n);b.innerHTML=`<img data-src="img/t/${n}.webp" alt="">`;b.onclick=()=>go(i);rt.appendChild(b)});
+N.forEach((n,i)=>{const b=document.createElement("button");b.className="rt";b.title=P[i][2]||nice(n);b.innerHTML=`<img data-src="${D[i]}/t/${n}.webp" alt="">`;b.onclick=()=>go(i);rt.appendChild(b)});
 M.forEach(([m,c],i)=>{const b=document.createElement("button");b.className="chip";b.innerHTML=`<i style="background:${c}"></i>${m}`;b.onclick=()=>{mi=i;show()};mu.appendChild(b)});
 let rAnim=0;function rscroll(x,anim){const R=document.getElementById("roster");cancelAnimationFrame(rAnim);if(!anim){R.scrollLeft=x;return}
  const x0=R.scrollLeft,t0=performance.now(),D=420;const step=n=>{const k=Math.min(1,(n-t0)/D),e=1-Math.pow(1-k,3);R.scrollLeft=x0+(x-x0)*e;if(k<1)rAnim=requestAnimationFrame(step)};rAnim=requestAnimationFrame(step)}
@@ -68,16 +68,16 @@ function loadVis(x){const R=document.getElementById("roster");const L=(x===undef
  [...rt.children].forEach(b=>{const i=b.firstChild;if(i.dataset.src&&b.offsetLeft+b.offsetWidth>L&&b.offsetLeft<Rr){i.src=i.dataset.src;delete i.dataset.src}})}
 let lvT=0;document.getElementById("roster").addEventListener("scroll",()=>{clearTimeout(lvT);lvT=setTimeout(()=>loadVis(),60)},{passive:true});
 function show(dir){
- const src=`img/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
+ const src=`${D[ai]}/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
  B.onload=()=>{B.style.transform=dir?`translateX(${dir*40}px)`:"none";requestAnimationFrame(()=>{B.classList.remove("out");B.style.transform="none";A.classList.add("out");if(dir)A.style.transform=`translateX(${-dir*40}px)`});front=B.id};
  B.src=src;
- document.getElementById("name").textContent=nice(N[ai]);
+ document.getElementById("name").textContent=P[ai][2]||nice(N[ai]);
  document.getElementById("count").textContent=`${ai+1} / ${N.length}`;
  [...rt.children].forEach((e,i)=>e.classList.toggle("on",i==ai));
  [...mu.children].forEach((e,i)=>e.classList.toggle("on",i==mi));
  const t=rt.children[ai],W=document.getElementById("roster").clientWidth;
  const tx=t.offsetLeft+t.offsetWidth/2-W/2;loadVis(tx);rscroll(tx,show.done);show.done=1;
- [ai-1,ai+1].forEach(j=>{if(N[j]){const p=new Image();p.src=`img/${N[j]}_${mi}.webp`}});
+ [ai-1,ai+1].forEach(j=>{if(N[j]){const p=new Image();p.src=`${D[j]}/${N[j]}_${mi}.webp`}});
 }
 function go(i,dir){i=(i+N.length)%N.length;dir=dir||(i>ai?1:-1);ai=i;show(dir)}
 document.getElementById("prev").onclick=()=>go(ai-1,-1);
