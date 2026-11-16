@@ -55,11 +55,14 @@ const M=[["Original","#8a5a2b"],["Gold","#e0a800"],["Diamond","#4aa8ff"],["Radio
 const nice=s=>s.replace(/([a-z])([A-Z])/g,"$1 $2");
 let ai=N.indexOf("Lion");if(ai<0)ai=0;let mi=0,front="a";
 const rt=document.getElementById("rtrack"),mu=document.getElementById("muts");
-N.forEach((n,i)=>{const b=document.createElement("button");b.className="rt";b.title=nice(n);b.innerHTML=`<img src="img/${n}_0.webp" alt="">`;b.onclick=()=>go(i);rt.appendChild(b)});
+N.forEach((n,i)=>{const b=document.createElement("button");b.className="rt";b.title=nice(n);b.innerHTML=`<img data-src="img/t/${n}.webp" alt="">`;b.onclick=()=>go(i);rt.appendChild(b)});
 M.forEach(([m,c],i)=>{const b=document.createElement("button");b.className="chip";b.innerHTML=`<i style="background:${c}"></i>${m}`;b.onclick=()=>{mi=i;show()};mu.appendChild(b)});
 let rAnim=0;function rscroll(x,anim){const R=document.getElementById("roster");cancelAnimationFrame(rAnim);if(!anim){R.scrollLeft=x;return}
  const x0=R.scrollLeft,t0=performance.now(),D=420;const step=n=>{const k=Math.min(1,(n-t0)/D),e=1-Math.pow(1-k,3);R.scrollLeft=x0+(x-x0)*e;if(k<1)rAnim=requestAnimationFrame(step)};rAnim=requestAnimationFrame(step)}
 ["touchstart","wheel","mousedown"].forEach(ev=>document.getElementById("roster").addEventListener(ev,()=>cancelAnimationFrame(rAnim),{passive:true}));
+function loadVis(x){const R=document.getElementById("roster");const L=(x===undefined?R.scrollLeft:x)-240,Rr=L+R.clientWidth+480;
+ [...rt.children].forEach(b=>{const i=b.firstChild;if(i.dataset.src&&b.offsetLeft+b.offsetWidth>L&&b.offsetLeft<Rr){i.src=i.dataset.src;delete i.dataset.src}})}
+let lvT=0;document.getElementById("roster").addEventListener("scroll",()=>{clearTimeout(lvT);lvT=setTimeout(()=>loadVis(),60)},{passive:true});
 function show(dir){
  const src=`img/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
  B.onload=()=>{B.style.transform=dir?`translateX(${dir*40}px)`:"none";requestAnimationFrame(()=>{B.classList.remove("out");B.style.transform="none";A.classList.add("out");if(dir)A.style.transform=`translateX(${-dir*40}px)`});front=B.id};
@@ -69,9 +72,8 @@ function show(dir){
  [...rt.children].forEach((e,i)=>e.classList.toggle("on",i==ai));
  [...mu.children].forEach((e,i)=>e.classList.toggle("on",i==mi));
  const t=rt.children[ai],W=document.getElementById("roster").clientWidth;
- rscroll(t.offsetLeft+t.offsetWidth/2-W/2,show.done);show.done=1;
+ const tx=t.offsetLeft+t.offsetWidth/2-W/2;loadVis(tx);rscroll(tx,show.done);show.done=1;
  [ai-1,ai+1].forEach(j=>{if(N[j]){const p=new Image();p.src=`img/${N[j]}_${mi}.webp`}});
- for(let k=0;k<6;k++){const p=new Image();p.src=`img/${N[ai]}_${k}.webp`}
 }
 function go(i,dir){i=(i+N.length)%N.length;dir=dir||(i>ai?1:-1);ai=i;show(dir)}
 document.getElementById("prev").onclick=()=>go(ai-1,-1);
