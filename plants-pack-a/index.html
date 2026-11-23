@@ -1,0 +1,160 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plants Pack Vol.1 · Preview</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"SF Pro Display","Segoe UI",Inter,Arial,sans-serif;background:linear-gradient(160deg,#f3effc,#e9eefc);color:#111;min-height:100vh;display:flex;justify-content:center;padding:28px 16px}
+.wrap{width:100%;max-width:980px}
+.top{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:16px}
+.kick{font-size:13px;font-weight:700;letter-spacing:.12em;color:#0071e3;text-transform:uppercase}
+h1{font-size:30px;letter-spacing:-.02em}
+.count{font-size:15px;color:#666;font-weight:600}
+.roster{position:relative;overflow-x:auto;overflow-y:hidden;height:104px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.roster::-webkit-scrollbar{display:none}
+.rtrack{display:flex;gap:12px;width:max-content;padding:12px calc(50% - 38px) 0}
+.rt{flex:0 0 76px;height:76px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:.65;transition:transform .25s,opacity .25s,box-shadow .25s;box-shadow:0 6px 16px rgba(0,0,0,.08);border:0}
+.rt img{width:82%;height:82%;object-fit:contain;pointer-events:none}
+.rt:hover{opacity:.9}
+.rt.on{opacity:1;transform:scale(1.14);box-shadow:0 0 0 3px #0071e3,0 10px 24px rgba(0,0,0,.16)}
+.tris{position:absolute;top:12px;left:18px;font-size:11px;font-weight:500;color:#a3a3ad;letter-spacing:.01em;z-index:3;pointer-events:none}
+.card{background:#fff;border-radius:28px;box-shadow:0 20px 60px rgba(40,30,90,.12);padding:22px 22px 26px;position:relative}
+.stage{position:relative;height:440px;display:flex;align-items:center;justify-content:center;user-select:none;touch-action:pan-y;overflow:hidden}
+.grow{position:absolute;inset:0;transition:opacity .18s,transform .3s cubic-bezier(.3,.8,.25,1)}
+.grow.out{opacity:0}
+.grow img{position:absolute;left:50%;top:50%;max-width:72%;max-height:92%;visibility:hidden;will-change:transform;transform:translate(-50%,-50%)}
+.grow img.sd{max-width:38%;max-height:46%}
+.grow img.on{visibility:visible}
+.ring{position:absolute;left:50%;top:58%;width:46%;aspect-ratio:2.6;border-radius:50%;border:3px solid rgba(255,214,90,.0);transform:translate(-50%,-50%) scale(.3);pointer-events:none}
+.ring.go{animation:ring .6s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes ring{0%{border-color:rgba(255,206,70,.85);transform:translate(-50%,-50%) scale(.3)}100%{border-color:rgba(255,206,70,0);transform:translate(-50%,-50%) scale(1.15)}}
+.steps{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);display:flex;gap:7px;z-index:2;pointer-events:none}
+.steps i{width:7px;height:7px;border-radius:50%;background:#e1e1e8;transition:background .2s,transform .2s}
+.steps i.on{background:#2fae4e;transform:scale(1.25)}
+.replay{position:absolute;top:10px;right:14px;z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:#f2f2f5;color:#111;font-size:19px;line-height:38px;cursor:pointer;transition:background .2s,transform .15s}
+.replay:hover{background:#e6e6ec}.replay:active{transform:scale(.9)}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:50%;border:0;background:#f2f2f5;font-size:26px;cursor:pointer;color:#111;transition:background .2s,transform .15s;z-index:2}
+.nav:hover{background:#e6e6ec}.nav:active{transform:translateY(-50%) scale(.92)}
+.prev{left:6px}.next{right:6px}
+.name{text-align:center;font-size:28px;font-weight:800;letter-spacing:-.02em;margin-top:4px}
+.muts{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:16px}
+.chip{display:flex;align-items:center;gap:9px;height:44px;padding:0 18px;border-radius:999px;border:1px solid #e3e3ea;background:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:background .2s,color .2s,transform .12s;font-family:inherit;color:#111}
+.chip:active{transform:scale(.95)}
+.chip i{width:14px;height:14px;border-radius:50%;display:block}
+.chip.on{background:#111;color:#fff;border-color:#111}
+.foot{display:flex;justify-content:center;margin-top:22px}
+.buy{display:inline-flex;align-items:center;height:54px;padding:0 30px;border-radius:999px;background:#0071e3;color:#fff;font-weight:700;font-size:18px;text-decoration:none;box-shadow:0 12px 30px rgba(0,80,180,.3)}
+.hint{text-align:center;color:#888;font-size:13px;margin-top:12px}
+body.embed{background:transparent;padding:0}
+body.embed .top{display:none}body.embed .foot{display:none}
+body.embed .card{box-shadow:0 10px 30px rgba(40,30,90,.08)}
+body.embed .grow img{max-width:60%;max-height:84%}
+body.embed .grow img.sd{max-width:32%;max-height:40%}
+html:has(body.embed),body.embed{height:100%}
+body.embed .wrap{height:100%;display:flex;flex-direction:column}
+body.embed .roster{flex:0 0 auto}
+body.embed .card{flex:1 1 auto;display:flex;flex-direction:column;margin-bottom:12px;min-height:0}
+body.embed .stage{flex:1 1 auto;height:auto;min-height:200px}
+@media(max-width:420px){body.embed .muts{gap:6px}body.embed .chip{height:34px;padding:0 10px;font-size:13px;gap:6px}body.embed .chip i{width:11px;height:11px}body.embed .card{padding:16px 12px 18px}body.embed .grow img{max-width:66%}body.embed .grow img.sd{max-width:34%;max-height:36%}}
+@media(max-width:600px){.stage{height:300px}.name{font-size:22px}.chip{height:38px;padding:0 13px;font-size:14px}h1{font-size:22px}.nav{width:44px;height:44px}.replay{width:34px;height:34px;line-height:34px;font-size:17px}}
+</style></head><body><div class="wrap">
+<div class="top"><div><div class="kick">Live preview</div><h1>Plants Pack Vol.1</h1></div><div class="count" id="count"></div></div>
+<div class="roster" id="roster"><div class="rtrack" id="rtrack"></div></div>
+<div class="card">
+ <div class="tris" id="tris"></div>
+ <button class="replay" id="replay" aria-label="Replay growth" title="Replay">&#8635;</button>
+ <div class="stage" id="stage"><button class="nav prev" id="prev" aria-label="Previous">&lsaquo;</button>
+  <div class="grow" id="ga"></div><div class="grow out" id="gb"></div>
+  <div class="steps" id="steps"><i></i><i></i><i></i><i></i><i></i></div>
+  <button class="nav next" id="next" aria-label="Next">&rsaquo;</button></div>
+ <div class="name" id="name"></div>
+ <div class="muts" id="muts"></div>
+ <div class="foot"><a class="buy" href="https://payhip.com/b/oBVu9" target="_top">Get the pack · $79.99</a></div>
+ <div class="hint">Swipe or use ← → to browse · Seed → 4 growth stages · All plants × 6 colours</div>
+</div></div>
+<script>
+if(new URLSearchParams(location.search).has("embed"))document.body.classList.add("embed");
+const P=[["AbyssTree", "Abyss Tree", 22136], ["DoomOak", "Doom Oak", 14144], ["VoidTree", "Void Tree", 25412], ["DragonTree", "Dragon Tree", 14988], ["AllKnowingTree", "All-Knowing Tree", 14784], ["WorldTree", "World Tree", 14696], ["GalaxyTree", "Galaxy Tree", 13728], ["FutureTree", "Future Tree", 14956], ["SkyscraperTree", "Skyscraper Tree", 12084], ["PotionTree", "Potion Tree", 14224], ["ManaMushroom", "Mana Mushroom", 14856], ["UnicornTree", "Unicorn Tree", 14256], ["WitchTree", "Witch Tree", 14764], ["GemTree", "Gem Tree", 12520], ["ElementalTree", "Elemental Tree", 13432], ["Apple", "Apple", 9528], ["Cherry", "Cherry", 14412], ["Orange", "Orange", 10384], ["Lemon", "Lemon", 8476], ["Plum", "Plum", 10340], ["Avocado", "Avocado", 10864], ["Coconut", "Coconut", 5940], ["PassionFruit", "Passion Fruit", 9428], ["Cucumber", "Cucumber", 7300], ["Pea", "Pea", 9084], ["Sunflower", "Sunflower", 4484], ["SugarCane", "Sugar Cane", 9812], ["FrostPine", "Frost Pine", 8756], ["SunBloom", "Sun Bloom", 2852], ["PoisonApple", "Poison Apple", 8872], ["CandyCane", "Candy Cane", 4708], ["LollipopTree", "Lollipop Tree", 6084], ["HoneyBloom", "Honey Bloom", 4604], ["BubblegumVine", "Bubblegum Vine", 6424], ["Onion", "Onion", 7064], ["Radish", "Radish", 3212], ["Beet", "Beet", 5260], ["Cabbage", "Cabbage", 7984], ["Pumpkin", "Pumpkin", 7072], ["Strawberry", "Strawberry", 10420], ["Raspberry", "Raspberry", 10408], ["Cranberry", "Cranberry", 10008], ["Chili", "Chili", 10168], ["Eggplant", "Eggplant", 7856], ["PricklyPear", "Prickly Pear", 5056], ["Wheat", "Wheat", 9724], ["MoonMelon", "Moon Melon", 4664], ["GhostPepper", "Ghost Pepper", 7656], ["LavaFern", "Lava Fern", 8800], ["VenomPod", "Venom Pod", 7932]];const N=P.map(x=>x[0]);const G="g";
+const M=[["Original", "#8a5a2b"], ["Gold", "#e0a800"], ["Diamond", "#4aa8ff"], ["Radioactive", "#2fd12f"], ["Red", "#e53030"], ["Rainbow", "conic-gradient(red,orange,yellow,lime,cyan,blue,magenta,red)"]];
+const RM=matchMedia("(prefers-reduced-motion: reduce)");
+let ai=N.indexOf("DragonTree");if(ai<0)ai=0;let mi=0,front="ga";
+const rt=document.getElementById("rtrack"),mu=document.getElementById("muts"),steps=[...document.getElementById("steps").children];
+N.forEach((n,i)=>{const b=document.createElement("button");b.className="rt";b.title=P[i][1];b.innerHTML=`<img data-src="${G}/t/${n}.webp" alt="">`;b.onclick=()=>go(i);rt.appendChild(b)});
+M.forEach(([m,c],i)=>{const b=document.createElement("button");b.className="chip";b.innerHTML=`<i style="background:${c}"></i>${m}`;b.onclick=()=>{mi=i;show(0,1)};mu.appendChild(b)});
+let rAnim=0;function rscroll(x,anim){const R=document.getElementById("roster");cancelAnimationFrame(rAnim);if(!anim){R.scrollLeft=x;return}
+ const x0=R.scrollLeft,t0=performance.now(),D=420;const step=n=>{const k=Math.min(1,(n-t0)/D),e=1-Math.pow(1-k,3);R.scrollLeft=x0+(x-x0)*e;if(k<1)rAnim=requestAnimationFrame(step)};rAnim=requestAnimationFrame(step)}
+["touchstart","wheel","mousedown"].forEach(ev=>document.getElementById("roster").addEventListener(ev,()=>cancelAnimationFrame(rAnim),{passive:true}));
+function loadVis(x){const R=document.getElementById("roster");const L=(x===undefined?R.scrollLeft:x)-240,Rr=L+R.clientWidth+480;
+ [...rt.children].forEach(b=>{const i=b.firstChild;if(i.dataset.src&&b.offsetLeft+b.offsetWidth>L&&b.offsetLeft<Rr){i.src=i.dataset.src;delete i.dataset.src}})}
+let lvT=0;document.getElementById("roster").addEventListener("scroll",()=>{clearTimeout(lvT);lvT=setTimeout(()=>loadVis(),60)},{passive:true});
+
+/* ---- growth timeline. Numbers measured from the reference shop card (60 fps frame-step):
+   rock = triangle wave 0 -> +10 deg (top leans right) -> 0, period 0.20 s, linear;
+   seed grows x1.47 linearly over 0.47 s while rocking, then swaps to the plant; plant keeps rocking 0..+9 deg. */
+const ROCK_P=.20,SEED_A=10,PL_A=9;
+const T_SEED=1.40,T_STAGE=.55,POP=.24;          // seed 1.4 s, then 4 stages of 0.55 s
+const tri=t=>{const x=(t/ROCK_P)%1;return x<.5?x*2:2-x*2};   // 0..1..0
+const back=k=>{const c=2.2;return 1+(c+1)*Math.pow(k-1,3)+c*Math.pow(k-1,2)};
+let run=null,raf=0;
+function frame(now){
+ if(!run)return;const r=run;
+ if(r.wait){r.t0+=now-(r.last||now)}             // hold the clock while the next image is still loading
+ r.last=now;let t=(now-r.t0)/1000;const im=r.imgs;
+ let vis,rot=0,sc=1;
+ if(RM.matches){                                  // reduced motion: plain steps, no rock/pop/idle
+  vis=t<.7?0:Math.min(4,1+Math.floor((t-.7)/.5));
+ }else if(t<T_SEED){
+  vis=0;
+  if(t<.2){sc=back(t/.2)}else{rot=SEED_A*tri(t-.2);if(t>T_SEED-.47)sc=1+.47*(t-(T_SEED-.47))/.47}
+ }else{
+  const u=t-T_SEED,k=Math.min(3,Math.floor(u/T_STAGE));vis=k+1;
+  const lt=u-k*T_STAGE;                           // time inside this stage
+  const pop=Math.min(1,lt/POP);sc=lt<POP?.78+.22*back(pop):1;
+  const cyc=vis<4?2:3;                            // 2 rocks per stage, 3 on the full plant
+  if(lt<cyc*ROCK_P)rot=PL_A*tri(lt)*(vis<4?1:1-.25*Math.floor(lt/ROCK_P));
+  else if(vis==4){const it=lt-cyc*ROCK_P,ramp=Math.min(1,it/1.2);rot=1.3*ramp*Math.sin(it*2*Math.PI/3.2);sc=1+.012*ramp*Math.sin(it*2*Math.PI/3.2+1.2)}
+ }
+ if(!im[vis].ok){r.wait=1;raf=requestAnimationFrame(frame);return}r.wait=0;
+ if(r.vis!==vis){if(r.vis!=null)im[r.vis].el.classList.remove("on");im[vis].el.classList.add("on");r.vis=vis;
+  steps.forEach((s,i)=>s.classList.toggle("on",i<=vis));if(vis==4&&!RM.matches){const g=r.ring;g.classList.remove("go");void g.offsetWidth;g.classList.add("go")}}
+ im[vis].el.style.transform=`translate(-50%,-50%) rotate(${rot.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
+ const end=RM.matches?.7+3*.5:T_SEED+4*T_STAGE;
+ if(t<end||(vis==4&&!RM.matches))raf=requestAnimationFrame(frame);   // idle sway keeps running only on the full plant
+}
+function build(box,i,m){
+ box.innerHTML="";const imgs=[];
+ for(let s=0;s<5;s++){const e=document.createElement("img");e.alt="";e.draggable=false;if(s==0)e.className="sd";
+  e.style.transformOrigin=s?"50% 90%":"50% 50%";const o={el:e,ok:0};e.onload=()=>{o.ok=1};
+  e.onerror=()=>setTimeout(()=>{e.src=`${G}/${N[i]}_${m}_${s}.webp?r=${Date.now()}`},500);
+  e.src=`${G}/${N[i]}_${m}_${s}.webp`;box.appendChild(e);imgs.push(o)}
+ const ring=document.createElement("div");ring.className="ring";box.appendChild(ring);
+ return{imgs,ring}}
+function start(box,i,m){cancelAnimationFrame(raf);const b=build(box,i,m);run={imgs:b.imgs,ring:b.ring,t0:performance.now(),vis:null,i,m};steps.forEach(s=>s.classList.remove("on"));raf=requestAnimationFrame(frame)}
+function show(dir,same){
+ const A=document.getElementById(front),B=document.getElementById(front=="ga"?"gb":"ga");
+ if(same){start(A,ai,mi)}else{
+  start(B,ai,mi);B.style.transition="none";B.style.transform=dir?`translateX(${dir*40}px)`:"none";B.classList.add("out");
+  void B.offsetWidth;                              // commit the start state, then slide in (no rAF: works in throttled iframes)
+  B.style.transition="";B.classList.remove("out");B.style.transform="none";A.classList.add("out");A.style.transform=dir?`translateX(${-dir*40}px)`:"none";
+  clearTimeout(show.clr);show.clr=setTimeout(()=>{if(A.classList.contains("out"))A.innerHTML=""},350);
+  front=B.id}
+ document.getElementById("name").textContent=P[ai][1];document.getElementById("tris").textContent=P[ai][2]?P[ai][2].toLocaleString("en-US")+" triangles":"";
+ document.getElementById("count").textContent=`${ai+1} / ${N.length}`;
+ [...rt.children].forEach((e,i)=>e.classList.toggle("on",i==ai));
+ [...mu.children].forEach((e,i)=>e.classList.toggle("on",i==mi));
+ const t=rt.children[ai],W=document.getElementById("roster").clientWidth;
+ const tx=t.offsetLeft+t.offsetWidth/2-W/2;loadVis(tx);rscroll(tx,show.done);show.done=1;
+}
+function go(i,dir){i=(i+N.length)%N.length;dir=dir||(i>ai?1:-1);ai=i;show(dir)}
+document.getElementById("prev").onclick=()=>go(ai-1,-1);
+document.getElementById("next").onclick=()=>go(ai+1,1);
+document.getElementById("replay").onclick=()=>show(0,1);
+addEventListener("keydown",e=>{if(e.key=="ArrowRight")go(ai+1,1);if(e.key=="ArrowLeft")go(ai-1,-1)});
+const st=document.getElementById("stage");let tx=null,ty=null;
+function swipe(dx,dy){if(Math.abs(dx)>35&&Math.abs(dx)>Math.abs(dy)){const d=dx<0?1:-1;go(ai+d,d)}}
+st.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+st.addEventListener("touchend",e=>{if(tx===null)return;const t=e.changedTouches[0];swipe(t.clientX-tx,t.clientY-ty);tx=null},{passive:true});
+let mx=null,my=null;
+st.addEventListener("mousedown",e=>{if(e.target.closest(".nav"))return;mx=e.clientX;my=e.clientY});
+addEventListener("mouseup",e=>{if(mx===null)return;swipe(e.clientX-mx,e.clientY-my);mx=null});
+document.addEventListener("visibilitychange",()=>{if(document.hidden)cancelAnimationFrame(raf);else if(run){run.last=0;raf=requestAnimationFrame(frame)}});
+show();
+</script></body></html>
