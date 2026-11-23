@@ -136,7 +136,7 @@ function show(dir,same){
   B.style.transition="";B.classList.remove("out");B.style.transform="none";A.classList.add("out");A.style.transform=dir?`translateX(${-dir*40}px)`:"none";
   clearTimeout(show.clr);show.clr=setTimeout(()=>{if(A.classList.contains("out"))A.innerHTML=""},350);
   front=B.id}
- document.getElementById("name").textContent=P[ai][1];document.getElementById("tris").textContent=P[ai][2]?P[ai][2].toLocaleString("en-US")+" triangles":"";
+ document.getElementById("name").textContent=P[ai][1];document.getElementById("tris").textContent="";
  document.getElementById("count").textContent=`${ai+1} / ${N.length}`;
  [...rt.children].forEach((e,i)=>e.classList.toggle("on",i==ai));
  [...mu.children].forEach((e,i)=>e.classList.toggle("on",i==mi));
