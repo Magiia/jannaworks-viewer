@@ -70,7 +70,7 @@ function loadVis(x){const R=document.getElementById("roster");const L=(x===undef
  [...rt.children].forEach(b=>{const i=b.firstChild;if(i.dataset.src&&b.offsetLeft+b.offsetWidth>L&&b.offsetLeft<Rr){i.src=i.dataset.src;delete i.dataset.src}})}
 let lvT=0;document.getElementById("roster").addEventListener("scroll",()=>{clearTimeout(lvT);lvT=setTimeout(()=>loadVis(),60)},{passive:true});
 function show(dir){
- const src=`${D[ai]}/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
+ const src=`a/${N[ai]}_${mi}.webp`,A=document.getElementById(front),B=document.getElementById(front=="a"?"b":"a");
  const my=++show.req;B.onload=B.onerror=null;
  if(A.getAttribute("src")!==src){
   const swap=()=>{if(my!==show.req)return;B.onload=B.onerror=null;B.style.transform=dir?`translateX(${dir*40}px)`:"none";requestAnimationFrame(()=>{B.classList.remove("out");B.style.transform="none";A.classList.add("out");if(dir)A.style.transform=`translateX(${-dir*40}px)`});front=B.id};
@@ -83,7 +83,7 @@ function show(dir){
  [...mu.children].forEach((e,i)=>e.classList.toggle("on",i==mi));
  const t=rt.children[ai],W=document.getElementById("roster").clientWidth;
  const tx=t.offsetLeft+t.offsetWidth/2-W/2;loadVis(tx);rscroll(tx,show.done);show.done=1;
- [ai-1,ai+1].forEach(j=>{if(N[j]){const p=new Image();p.src=`${D[j]}/${N[j]}_${mi}.webp`}});
+ [ai-1,ai+1].forEach(j=>{if(N[j]){const p=new Image();p.src=`a/${N[j]}_${mi}.webp`}});
 }
 show.req=0;
 function go(i,dir){i=(i+N.length)%N.length;dir=dir||(i>ai?1:-1);ai=i;show(dir)}
